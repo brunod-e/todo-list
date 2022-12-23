@@ -1,0 +1,99 @@
+.container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  text-align: start;
+  padding: 16px;
+  gap: 12px;
+
+  background-color: var(--gray-500);
+  border: 1px solid var(--gray-400);
+  border-radius: 8px;
+
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+
+  word-wrap: break-word;
+}
+
+label input {
+  display: none;
+}
+
+label .customCheckboxUnchecked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 1.09rem;
+  height: 1.09rem;
+  border: 2px solid var(--blue-300);
+  border-radius: 999px;
+  background-color: transparent;
+  cursor: pointer;
+
+  transition: all 0.1s ease-in-out;
+}
+label .customCheckboxUnchecked:hover {
+  border: 2px solid var(--blue-500);
+}
+
+label .customCheckboxChecked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 1.09rem;
+  height: 1.09rem;
+  border: 2px solid var(--purple-500);
+  border-radius: 999px;
+  background-color: var(--purple-500);
+  cursor: pointer;
+
+  transition: all 0.1s ease-in-out;
+}
+label .customCheckboxChecked:hover {
+  border: 2px solid var(--purple-300);
+  background-color: var(--purple-300);
+}
+
+.uncheckedContent {
+  color: var(--gray-100);
+  font-size: 0.875rem;
+  display: flex;
+}
+
+.checkedContent {
+  color: var(--gray-300) !important;
+  font-size: 0.875rem;
+  text-decoration: line-through;
+}
+
+.container button {
+  height: 1.5rem;
+  width: 1.5rem;
+  background: transparent;
+  border: 0;
+  color: var(--gray-300);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.container button:hover {
+  color: var(--red-500);
+  background-color: var(--gray-400);
+}
+
+.container + .container {
+  margin-top: 0.75rem;
+}
+
+.container span {
+  width: 80%;
+  word-break: break-word;
+}

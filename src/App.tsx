@@ -1,34 +1,84 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import { Header } from "./components/Header";
+import { TaskForm } from "./components/TaskForm";
+import { Task, TaskType } from "./components/Task";
+import { TbClipboardText } from "react-icons/tb";
+
+import styles from "./App.module.css";
+import "./global.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tasks, setTasks] = useState<TaskType[]>([]);
+
+  const hasTasks = tasks.length > 0;
+  const checkedTasks = tasks.filter((task) => task.isChecked).length;
+
+  const handleNewTask = (newTask: TaskType) => {
+    setTasks((state) => [...state, newTask]);
+  };
+
+  const handleCheckTask = (id: string) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return {
+          ...task,
+          isChecked: !task.isChecked,
+        };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  };
+
+  const handleRemoveTask = (id: string) => {
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+    setTasks(filteredTasks);
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div>
+      <Header />
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <TaskForm onSubmit={handleNewTask} />
+
+          <div className={styles.taskList}>
+            <div className={styles.taskListHeader}>
+              <span>
+                Tarefas criadas <strong>{tasks.length}</strong>
+              </span>
+              <span>
+                Concluídas{" "}
+                <strong>
+                  {checkedTasks} de {tasks.length}
+                </strong>
+              </span>
+            </div>
+            <div>
+              {hasTasks ? (
+                <div>
+                  {tasks.map((task) => (
+                    <Task
+                      key={task.id}
+                      task={task}
+                      onDelete={handleRemoveTask}
+                      onCheckTask={handleCheckTask}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.taskListEmpty}>
+                  <TbClipboardText size={60} color={"var(--gray-400)"} />
+                  <strong>Você ainda não tem tarefas cadastradas</strong>
+                  <span>Crie tarefas e organize seus itens a fazer</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
